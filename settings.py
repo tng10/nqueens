@@ -1,0 +1,4 @@
+class Settings:
+	BOARD_SIZE = 8
+	POPULATION_SIZE = 100
+	GENERATION_SIZE = 50
