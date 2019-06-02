@@ -7,18 +7,15 @@ class Mutation:
 
 	def __init__(self, individual: Individual):
 		self.individual: Individual = individual
-		self.rate = 10
+		self.rate = 15
 
 	def mutate(self):
-		# if random.randint(0, 100) < self.rate:
+		if random.randint(0, 100) < self.rate:
+			x, y = None, None
+			while x == y:
+				x = random.randint(0, Settings.BOARD_SIZE - 1)
+				y = random.randint(0, Settings.BOARD_SIZE - 1)
 
-		x, y, w, z = [None] * 4
-		while x == y and w == z:
-			x = random.randint(0, Settings.BOARD_SIZE - 1)
-			y = random.randint(0, Settings.BOARD_SIZE - 1)
-			w = random.randint(0, Settings.BOARD_SIZE - 1)
-			z = random.randint(0, Settings.BOARD_SIZE - 1)
+			self.individual.genes[x], self.individual.genes[y] = self.individual.genes[y], self.individual.genes[x]
 
-		self.individual.genes[x], self.individual.genes[y] = self.individual.genes[y], self.individual.genes[x]
-		self.individual.genes[w], self.individual.genes[z] = self.individual.genes[z], self.individual.genes[w]
 		return self.individual

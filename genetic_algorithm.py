@@ -9,6 +9,8 @@ class GeneticAlgorithm:
 		current_generation = 0
 		population = Population(Settings.POPULATION_SIZE)
 
+		print('Fitness GOAL is', self.GOAL)
+
 		print(f'Generating first population with {Settings.POPULATION_SIZE} individuals.')
 		population.initial()
 		current_generation += 1
@@ -29,13 +31,14 @@ class GeneticAlgorithm:
 		while True:
 			previous_population = population
 			if self.has_goal(previous_population):
-				print('Solution has been found!')
+				print(f'Solution has been found! Generation Nº {current_generation}')
 				print(population.best_fitness['individual'])
 				print(population.best_fitness['individual'].draw())
 				return
 
 			if current_generation == Settings.GENERATION_SIZE:
 				print('Oops, no good results! The solution could not be found.')
+				print(f'The best individual had {population.best_fitness["individual"].fitness}')
 				return
 
 			print(f'Generation {current_generation + 1}')
@@ -47,7 +50,6 @@ class GeneticAlgorithm:
 
 			best_fitness = population.best_fitness
 			print('Best Fitness belongs to', best_fitness['amount'], best_fitness['individual'])
-			#print(best_fitness['individual'].draw())
 
 			current_generation += 1
 
