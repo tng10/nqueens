@@ -23,7 +23,8 @@ class Individual:
 			output += "\n"
 		return output
 
-	def generate_genes(self):
+	@classmethod
+	def generate_genes(cls):
 		genes = list(range(Settings.BOARD_SIZE))
 		random.Random(random.randint(0, 1000)).shuffle(genes)
 		return genes
