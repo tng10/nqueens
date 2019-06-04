@@ -10,6 +10,8 @@ class Crossover:
     def __init__(self, mating: Mating):
         self.mating = mating
         self.new_generation: List[Individual] = []
+
+    def apply(self):
         self.reproduce()
 
     def reproduce(self):

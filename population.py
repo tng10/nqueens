@@ -39,7 +39,7 @@ class Population:
 		mating = Mating(selection)
 		mating.apply()
 		crossover = Crossover(mating)
-		# crossover.apply()
+		crossover.apply()
 
 		for i, individual in enumerate(crossover.mating.selection.population.individuals):
 			mutation = Mutation(individual)

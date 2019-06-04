@@ -13,10 +13,8 @@ class Mating:
 	def __init__(self, selection: Selection):
 		self.selection = selection
 		self.pairs: List[Pair] = []
-		# self.mating_population = Settings.POPULATION_SIZE // 2
 
 	def apply(self):
-		# random.Random(random.randint(0, 1000)).shuffle(self.selection.selected)
 		for i in range(len(self.selection.selected) // 2):
 			self.pairs.append(Pair(self.selection.selected[i], self.selection.selected[i+1]))
 		return self.pairs
