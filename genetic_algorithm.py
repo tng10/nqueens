@@ -3,59 +3,61 @@ from population import Population
 
 
 class GeneticAlgorithm:
-	GOAL = Settings.BOARD_SIZE * (Settings.BOARD_SIZE - 1) / 2
-	
-	def start(self):
-		current_generation = 0
-		population = Population(Settings.POPULATION_SIZE)
+    GOAL = Settings.BOARD_SIZE * (Settings.BOARD_SIZE - 1) / 2
 
-		print('Fitness GOAL is', self.GOAL)
+    def __init__(self):
+        self.population = None
 
-		print(f'Generating first population with {Settings.POPULATION_SIZE} individuals.')
-		population.initial()
-		current_generation += 1
+    def start(self):
+        current_generation = 0
+        self.population = Population(Settings.POPULATION_SIZE)
 
-		print('Calculating fitness for every and each individual')
-		population.calculate_fitness()
+        print('Fitness GOAL is', self.GOAL)
 
-		best_fitness = population.best_fitness
-		print('Best Fitness belongs to', best_fitness['amount'], best_fitness['individual'])
-		print(best_fitness['individual'].draw())
+        print(f'Generating first population with {Settings.POPULATION_SIZE} individuals.')
+        self.population.initial()
+        current_generation += 1
 
-		if self.has_goal(population):
-			print('Solution has been found!')
-			print(population.best_fitness['individual'])
-			print(population.best_fitness['individual'].draw())
-			return
+        print('Calculating fitness for every and each individual')
+        self.population.calculate_fitness()
 
-		while True:
-			previous_population = population
-			if self.has_goal(previous_population):
-				print(f'Solution has been found! Generation Nº {current_generation}')
-				print(population.best_fitness['individual'])
-				print(population.best_fitness['individual'].draw())
-				return
+        best_fitness = self.population.best_fitness
+        print('Best Fitness belongs to', best_fitness['amount'], best_fitness['individual'])
+        print(best_fitness['individual'].draw())
 
-			if current_generation == Settings.GENERATION_SIZE:
-				print('Oops, no good results! The solution could not be found.')
-				print(f'The best individual had {population.best_fitness["individual"].fitness}')
-				return
+        if self.has_goal():
+            print('Solution has been found!')
+            print(self.population.best_fitness['individual'])
+            print(self.population.best_fitness['individual'].draw())
+            return
 
-			print(f'Generation {current_generation + 1}')
+        while True:
+            if self.has_goal():
+                print(f'Solution has been found! Generation Nº {current_generation}')
+                print(self.population.best_fitness['individual'])
+                print(self.population.best_fitness['individual'].draw())
+                return
 
-			population = population.next_generation(population)
-			print(f'Total of {len(population.individuals)} individuals')
-			population.calculate_fitness()
-			print('Mode of individuals is', population.mode().fitness, 'with', population.mode())
+            if current_generation == Settings.GENERATION_SIZE:
+                print('Oops, no good results! The solution could not be found.')
+                print(f'The best individual had {self.population.best_fitness["individual"].fitness}')
+                return
 
-			best_fitness = population.best_fitness
-			print('Best Fitness belongs to', best_fitness['amount'], best_fitness['individual'])
+            print(f'Generation {current_generation + 1}')
 
-			current_generation += 1
+            self.population = self.population.next_generation(self.population)
+            print(f'Total of {len(self.population.individuals)} individuals')
+            self.population.calculate_fitness()
+            print('Mode of individuals is', self.population.mode().fitness, 'with', self.population.mode())
 
-			print('\n')
+            best_fitness = self.population.best_fitness
+            print('Best Fitness belongs to', best_fitness['amount'], best_fitness['individual'])
 
-	def has_goal(self, population):
-		if population.best_fitness['amount'] == self.GOAL:
-			return True
-		return False
+            current_generation += 1
+
+            print('\n')
+
+    def has_goal(self):
+        if self.population.best_fitness['amount'] == self.GOAL:
+            return True
+        return False

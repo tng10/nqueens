@@ -3,12 +3,12 @@ from genetic_algorithm import GeneticAlgorithm
 
 
 def main():
-	ga = GeneticAlgorithm()
-	ga.start()
+    ga = GeneticAlgorithm()
+    ga.start()
 
 
 if __name__ == '__main__':
-	start = time.time()
-	main()
-	end = time.time()
-	print('It has finished in', end - start, 'milliseconds')
+    start = time.time()
+    main()
+    end = time.time()
+    print('It has finished in', end - start, 'seconds')
