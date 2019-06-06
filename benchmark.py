@@ -1,5 +1,6 @@
 import time
 from statistics import mean
+
 from genetic_algorithm import GeneticAlgorithm
 
 

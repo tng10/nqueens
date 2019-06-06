@@ -1,7 +1,8 @@
 import random
 from typing import List
-from settings import Settings
+
 from mating import Mating
+from settings import Settings
 from individual import Individual
 
 

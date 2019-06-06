@@ -1,4 +1,3 @@
-import operator
 from settings import Settings
 from population import Population
 

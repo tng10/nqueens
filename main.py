@@ -1,4 +1,5 @@
 import time
+
 from genetic_algorithm import GeneticAlgorithm
 
 

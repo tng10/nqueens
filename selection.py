@@ -1,4 +1,5 @@
 import operator, random, enum
+
 from settings import Settings
 
 

@@ -1,5 +1,6 @@
 import random
 from typing import List
+
 from settings import Settings
 
 
