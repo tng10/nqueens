@@ -1,3 +1,4 @@
+import operator
 from settings import Settings
 from population import Population
 
@@ -52,6 +53,14 @@ class GeneticAlgorithm:
 
             best_fitness = self.population.best_fitness
             print('Best Fitness belongs to', best_fitness['amount'], best_fitness['individual'])
+
+            if self.has_goal():
+                print(f'Solution has been found! Generation Nº {current_generation}')
+                print(self.population.best_fitness['individual'])
+                print(self.population.best_fitness['individual'].draw())
+                return
+
+            self.population.kill_worst_individuals()
 
             current_generation += 1
 

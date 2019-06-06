@@ -13,22 +13,12 @@ class Mating:
 	def __init__(self, selection: Selection):
 		self.selection = selection
 		self.pairs: List[Pair] = []
-		# self.mating_population = self.round_up_to_even(random.uniform(0.6, 0.9) * Settings.POPULATION_SIZE // 2)
-		self.mating_population = Settings.POPULATION_SIZE // 2
-		self.pick()
 
-	def pick(self):
-		breeding = []
-		for i in range(self.mating_population // 2):
-			if len(self.selection.population.individuals) >= 2:
-				individual1 = self.selection.population.individuals.pop()
-				individual2 = self.selection.population.individuals.pop()
-				self.pairs.append(Pair(individual1, individual2))
-				breeding.append(individual1)
-				breeding.append(individual2)
-
-		self.selection.population.individuals.extend(breeding)
+	def apply(self):
+		for i in range(len(self.selection.selected) // 2):
+			self.pairs.append(Pair(self.selection.selected[i], self.selection.selected[i+1]))
 		return self.pairs
 
-	def round_up_to_even(self, number):
+	@classmethod
+	def round_up_to_even(cls, number):
 		return math.ceil(number / 2.) * 2

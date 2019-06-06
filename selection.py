@@ -12,26 +12,36 @@ class Selection:
 	def __init__(self, population, strategy):
 		self.population = population
 		self.limit: int = Settings.POPULATION_SIZE // 2 + 1 if Settings.POPULATION_SIZE // 2 % 2 != 0 else Settings.POPULATION_SIZE // 2
-		getattr(self, strategy)()
+		self.selected = []
+		self.strategy = strategy
+
+	def apply(self):
+		return getattr(self, self.strategy)()
 
 	def best(self):
 		self.population.individuals = sorted(self.population.individuals, key=operator.attrgetter('fitness'))[:self.limit]
 
 	def tournament(self):
-		while len(self.population.individuals) != Settings.POPULATION_SIZE // 2:
+		for _ in range(Settings.POPULATION_SIZE // 2):
 
-			x, y = None, None
-			while x == y:
-				x = random.randint(0, len(self.population.individuals) - 1)
-				y = random.randint(0, len(self.population.individuals) - 1)
-
-			individual1 = self.population.individuals[x]
-			individual2 = self.population.individuals[y]
+			individual1, individual2 = None, None
+			while individual1 is None or individual2 is None:
+				individual1 = self._tournament_choice()
+				individual2 = self._tournament_choice()
 
 			if individual1.fitness > individual2.fitness:
-				self.population.individuals.pop(y)
+				self.selected.append(individual1)
 			else:
-				self.population.individuals.pop(x)
+				self.selected.append(individual2)
+		return self.selected
+
+	def _tournament_choice(self):
+		chosen_one = random.choice(self.population.individuals)
+		for _ in range(Settings.POPULATION_SIZE // 5):
+			individual_chosen = random.choice(self.population.individuals)
+			if individual_chosen.fitness > chosen_one.fitness:
+				chosen_one = individual_chosen
+		return chosen_one
 
 	def pop(self):
 		return self.population.individuals.pop(index=random.randint(self.population.individuals))

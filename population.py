@@ -1,3 +1,5 @@
+import operator
+from settings import Settings
 from copy import deepcopy
 from typing import List, Dict
 from mating import Mating
@@ -33,8 +35,11 @@ class Population:
 
 	def next_generation(self, population):
 		selection = Selection(deepcopy(population), strategy=SelectionStrategy.TOURNAMENT.value)
+		selection.apply()
 		mating = Mating(selection)
+		mating.apply()
 		crossover = Crossover(mating)
+		crossover.apply()
 
 		for i, individual in enumerate(crossover.mating.selection.population.individuals):
 			mutation = Mutation(individual)
@@ -43,3 +48,7 @@ class Population:
 		print(f'Individuals: {len(self.individuals)}')
 		print(f'New generation: {len(crossover.new_generation)}')
 		return crossover.mating.selection.population
+
+	def kill_worst_individuals(self, size=Settings.POPULATION_SIZE // 2):
+		self.individuals = sorted(self.individuals, key=operator.attrgetter('fitness'))
+		del self.individuals[:size]
